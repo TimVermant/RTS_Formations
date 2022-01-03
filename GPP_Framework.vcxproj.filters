@@ -47,6 +47,9 @@
     <ClCompile Include="projects\DecisionMaking\BehaviorTrees\App_AgarioGame_BT.cpp" />
     <ClCompile Include="framework\EliteAI\EliteGraphs\EInfluenceMap.cpp" />
     <ClCompile Include="projects\DecisionMaking\InfluenceMaps\App_InfluenceMap.cpp" />
+    <ClCompile Include="projects\Formations\App_RTSFormations.cpp" />
+    <ClCompile Include="projects\Formations\BattleUnitAgent.cpp" />
+    <ClCompile Include="projects\Formations\Formation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="projects\App_Selector.h" />
@@ -143,6 +146,9 @@
     <ClInclude Include="projects\DecisionMaking\BehaviorTrees\Behaviors.h" />
     <ClInclude Include="framework\EliteAI\EliteGraphs\EInfluenceMap.h" />
     <ClInclude Include="projects\DecisionMaking\InfluenceMaps\App_InfluenceMap.h" />
+    <ClInclude Include="projects\Formations\App_RTSFormations.h" />
+    <ClInclude Include="projects\Formations\BattleUnitAgent.h" />
+    <ClInclude Include="projects\Formations\Formation.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

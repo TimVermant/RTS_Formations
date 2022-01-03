@@ -29,6 +29,8 @@
 #include "projects/DecisionMaking/BehaviorTrees/App_AgarioGame_BT.h"
 #elif defined(ActiveApp_InfluenceMaps)
 #include "projects/DecisionMaking/InfluenceMaps/App_InfluenceMap.h"
+#elif defined(ActiveApp_RTSFormations)
+#include "projects/Formations/App_RTSFormations.h"
 #endif
 
 //Hotfix for genetic algorithms project
@@ -102,6 +104,8 @@ int main(int argc, char* argv[])
 		myApp = new App_AgarioGame_BT();
 #elif defined(ActiveApp_InfluenceMaps)
 		myApp = new App_InfluenceMap();
+#elif defined(ActiveApp_RTSFormations)
+		myApp = new App_RTSFormations();
 #endif
 		ELITE_ASSERT(myApp, "Application has not been created.");
 		//Boot application

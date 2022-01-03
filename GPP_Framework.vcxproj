@@ -207,6 +207,9 @@
     <ClCompile Include="projects\DecisionMaking\FiniteStateMachines\App_AgarioGame.cpp" />
     <ClCompile Include="projects\DecisionMaking\FiniteStateMachines\StatesAndTransitions.cpp" />
     <ClCompile Include="projects\DecisionMaking\InfluenceMaps\App_InfluenceMap.cpp" />
+    <ClCompile Include="projects\Formations\App_RTSFormations.cpp" />
+    <ClCompile Include="projects\Formations\BattleUnitAgent.cpp" />
+    <ClCompile Include="projects\Formations\Formation.cpp" />
     <ClCompile Include="projects\Movement\Pathfinding\GraphTheory\App_GraphTheory.cpp" />
     <ClCompile Include="projects\Movement\Pathfinding\NavMeshGraph\App_NavMeshGraph.cpp" />
     <ClCompile Include="projects\Movement\Pathfinding\PathfindingAStar\App_PathfindingAStar\App_PathfindingAStar.cpp" />
@@ -305,6 +308,9 @@
     <ClInclude Include="projects\DecisionMaking\FiniteStateMachines\App_AgarioGame.h" />
     <ClInclude Include="projects\DecisionMaking\FiniteStateMachines\StatesAndTransitions.h" />
     <ClInclude Include="projects\DecisionMaking\InfluenceMaps\App_InfluenceMap.h" />
+    <ClInclude Include="projects\Formations\App_RTSFormations.h" />
+    <ClInclude Include="projects\Formations\BattleUnitAgent.h" />
+    <ClInclude Include="projects\Formations\Formation.h" />
     <ClInclude Include="projects\Movement\Pathfinding\GraphTheory\App_GraphTheory.h" />
     <ClInclude Include="projects\Movement\Pathfinding\NavMeshGraph\App_NavMeshGraph.h" />
     <ClInclude Include="projects\Movement\Pathfinding\PathfindingAStar\App_PathfindingAStar\App_PathfindingAStar.h" />

@@ -10,5 +10,6 @@
 //#define ActiveApp_Astar
 //#define ActiveApp_NavMeshGraph
 //#define ActiveApp_FSM
-#define ActiveApp_BT
+//#define ActiveApp_BT
 //#define ActiveApp_InfluenceMaps
+#define ActiveApp_RTSFormations
