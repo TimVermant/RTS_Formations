@@ -18,6 +18,7 @@ public:
 	void MarkForDestroy();
 	bool CanBeDestroyed();
 
+	void MoveTowards(Elite::Vector2 pos);
 
 
 
@@ -30,6 +31,8 @@ private:
 	float m_SpeedBase = 25.f;
 	float m_DetectRadius = 10.0f;
 
+	//Only needs seek
+	ISteeringBehavior* m_pSeek = nullptr;
 
 private:
 	//C++ make the class non-copyable

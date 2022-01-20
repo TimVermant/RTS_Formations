@@ -4,6 +4,7 @@
 // Includes & Forward Declarations
 //-----------------------------------------------------------------
 #include "framework/EliteInterfaces/EIApp.h"
+#include <vector>
 
 class AgarioFood;
 class AgarioAgent;

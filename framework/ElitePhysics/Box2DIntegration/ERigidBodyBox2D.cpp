@@ -31,6 +31,12 @@ Elite::RigidBodyBase<Elite::Vector2, Elite::Vector2>::RigidBodyBase(const RigidB
 			bd.type = b2_staticBody; break;
 	}
 
+	b2FixtureDef fixture;
+	b2Filter filter{};
+	filter.groupIndex = 0;
+
+	fixture.filter = filter;
+
 	//Create body
 	if(PHYSICSWORLD != nullptr && PHYSICSWORLD->GetWorld() != nullptr)
 		m_pBody = PHYSICSWORLD->GetWorld()->CreateBody(&bd);

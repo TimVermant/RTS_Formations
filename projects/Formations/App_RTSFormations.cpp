@@ -7,11 +7,7 @@ using namespace Elite;
 
 App_RTSFormations::~App_RTSFormations()
 {
-	for (auto it : m_pUnits)
-	{
-
-		SAFE_DELETE(it);
-	}
+	SAFE_DELETE(m_pFormation);
 }
 
 void App_RTSFormations::Start()
@@ -21,22 +17,19 @@ void App_RTSFormations::Start()
 	DEBUGRENDERER2D->GetActiveCamera()->SetZoom(50.f);
 	DEBUGRENDERER2D->GetActiveCamera()->SetCenter(Elite::Vector2(70, 50));
 	DEBUGRENDERER2D->GetActiveCamera()->SetMoveLocked(false);
-	
 
-	//Initialization of my units
-	m_pUnits.reserve(m_NrOfUnits);
-	for (int i{ 0 }; i < m_NrOfUnits; i++)
-	{
-		Vector2 pos = Elite::randomVector2(-m_TrimWorldSize, m_TrimWorldSize);
-		BattleUnitAgent* pAgent = new BattleUnitAgent{ pos };
-		m_pUnits.push_back(pAgent);
-	}
+
+	m_pFormation = new Formation{ m_NrOfUnits };
+
+	AddUnits();
 }
 
 void App_RTSFormations::Update(float deltaTime)
 {
 
 	UpdateUI();
+
+	m_pFormation->Update(deltaTime);
 }
 
 void App_RTSFormations::UpdateUI()
@@ -79,6 +72,11 @@ void App_RTSFormations::UpdateUI()
 	ImGui::Spacing();
 	ImGui::Spacing();
 
+	if (ImGui::Button("Make formation"))
+	{
+		std::cout << "Button pressed" << std::endl;
+		m_pFormation->CreateFormation(m_TrimWorldSize);
+	}
 
 
 	//End
@@ -98,8 +96,16 @@ void App_RTSFormations::Render(float deltaTime) const
 	};
 	DEBUGRENDERER2D->DrawPolygon(&points[0], 4, { 1,0,0,1 }, 0.4f);
 
-	for (auto pUnit : m_pUnits)
+	m_pFormation->Render(deltaTime);
+}
+
+void App_RTSFormations::AddUnits()
+{
+	
+
+	for (size_t i = 0; i < m_NrOfUnits; i++)
 	{
-		pUnit->Render(deltaTime);
+		Vector2 pos = Elite::randomVector2(-m_TrimWorldSize, m_TrimWorldSize);
+		m_pFormation->AddUnit(new BattleUnitAgent{ pos });
 	}
 }

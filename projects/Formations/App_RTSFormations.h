@@ -32,10 +32,10 @@ private:
 
 	Formation* m_pFormation;
 
-	std::vector<BattleUnitAgent*> m_pUnits;
+	void AddUnits();
 
 	// Formation parameters
-	int m_NrOfUnits = 10;
+	size_t m_NrOfUnits = 36;
 
 	float m_HorizontalDistanceUnits, m_VerticalDistanceUnits;
 	float m_VerticalLineDistance;

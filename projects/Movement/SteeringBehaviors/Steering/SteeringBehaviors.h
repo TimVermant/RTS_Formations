@@ -11,6 +11,7 @@
 // Includes & Forward Declarations
 //-----------------------------------------------------------------
 #include "../SteeringHelpers.h"
+#include <type_traits>
 class SteeringAgent;
 class Obstacle;
 
