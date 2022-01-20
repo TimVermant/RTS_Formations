@@ -8,13 +8,13 @@ In this research project our code is constructed by having 1 unit be assigned as
 
 In this research project the focus will be on having multiple variations on the different types of formations you can have, and having my formations move around without breaking the formation whilst being able to handle having individual units die and replacing them. </br>
 
-##Design
+## Design
 There are two main classes: the 'BattleUnit' class which handles the movement and display of the units and a 'Formation' class. The Formation class will designate one BattleUnit as a LeaderUnit and afterwards calculate the relative desired positions of all the other units. It will then loop over all the BattleUnits in the Formation and direct them to move towards their desired position in the formation.   
 
 </br></br>
 
-##Result
+## Result
 
 </br></br>
 
-##Conclusion
+## Conclusion
