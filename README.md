@@ -6,17 +6,45 @@ It only makes sense that RTS games, with an overwhelming amount of game series h
 
 In this research project our code is constructed by having 1 unit be assigned as a 'leader' unit that determines both the speed and the direction of the formation unit. There are multiple parameters that determine the position of all the units relative to the leader, but the main thing will be that our leader will rotate towards a certain direction to move and all the units of that formation will then have a direction that is parallel to the leader, moving forward with a speed determined by the speed of the leader.</br>
 
-In this research project the focus will be on having multiple variations on the different types of formations you can have, and having my formations move around without breaking the formation whilst being able to handle having individual units die and replacing them. </br>
+The focus of this project will be on researching how formations act independently, how formations process input and how individual units in a formation behave when attacking an opposing formation. </br>
 
-## Design
-In order for us to define the shape of the formation, we require a few parameters that define the shape of a formation:
+## Designing the formation
+In order to dynamically form and move around our formation, there are a few things we are going to need and calculate: the shape of the formation, the position of the units, the movement of the formation, the opponent selection and the combat behaviour. All these aspects will be explained in their upcoming respective section.</br>
+### The shape of the formation
+![image](https://user-images.githubusercontent.com/40210931/150534147-63c3ed8e-8d7d-42d7-a63e-85f685ae5329.png)
+</br>
+Firstly, we divide all units over a number of formations where each formation can have a different shape. A formation is made up of multiple lines that each have a number of units on them and with a set distance between eachother. </br>
+The units on every line are then given an offset from eachother which will then give the formation its shape. 
+Our formation is centered around a leader unit positioned in the middle of the first line, which then decides both the general direction and the speed of the formation.
+</br></br>
+There are other parameters regarding the selection of an opponent and the actual combat of a formation that we will get into later, below you can find a list of all the parameters and their brief description: </br>
+
+
+
 ![image](https://user-images.githubusercontent.com/40210931/150529515-922ca158-ce71-4c3d-80d4-97d8b6f5978c.png)
 
+### The positions of the units
+In order to assign every unit to a formation and have it positioned accordingly, there are a few steps we need to take: </br>
+&nbsp;   1. Assign the units to their closest formation  </br>
+&nbsp;   2. Distribute the units over the lines in the formation using their Y-Coordinate </br>
+&nbsp;   3. Assign the position of the units on the line according to their X-Coordinate </br> 
+
+Of course we also assume that some units might die during combat, so in order for the shape of the formation to be maintained we use units from the back to replace units in the front. This is done by only adjusting the position of neighboring units.
 
 
-There are two main classes: the **BattleUnit** class which handles the movement and display of the units and a **Formation** class. The Formation class will designate one BattleUnit as a LeaderUnit and afterwards calculate the relative desired positions of all the other units. It will then loop over all the BattleUnits in the Formation and direct them to move towards their desired position in the formation.   
 
-</br></br>
+![image](https://user-images.githubusercontent.com/40210931/150535803-76329192-96ec-4468-8dcf-9eeaa7e3eded.png)
+
+### The movement of the formation
+We approach our formation movement in two steps: First we calculate the direction the leader of a formation should move towards, we then set all other units in the formation follow in that same direction parallel to the leader. </br>
+Should the formation break while moving due to potential obstacles, we can either have our units that fell out of formation temporarily move slightly faster or have our formation slow down to have those same units catch up and retain the formation.
+
+### Opponent selection
+</br>
+
+
+### Combat behavior
+</br>
 
 ## Result
 
@@ -24,3 +52,5 @@ There are two main classes: the **BattleUnit** class which handles the movement 
 </br></br>
 
 ## Conclusion
+
+## Sources
