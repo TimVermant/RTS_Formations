@@ -1,6 +1,6 @@
 # Battle formations in RTS games
 
-![image](https://user-images.githubusercontent.com/40210931/150549407-d178e545-9db3-4362-b7a6-aa4f8f873ffe.png)
+![image](https://user-images.githubusercontent.com/40210931/150555412-9e7eea49-062a-431a-8c0c-4a88e781559f.png)
 
 
 ## Introduction
