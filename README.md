@@ -36,15 +36,33 @@ Of course we also assume that some units might die during combat, so in order fo
 ![image](https://user-images.githubusercontent.com/40210931/150535803-76329192-96ec-4468-8dcf-9eeaa7e3eded.png)
 
 ### The movement of the formation
-We approach our formation movement in two steps: First we calculate the direction the leader of a formation should move towards, we then set all other units in the formation follow in that same direction parallel to the leader. </br>
+We don't just want to be able to create our formation, we also want it to be able to move towards a desired position whilst maintaining the formation.
+We approach this momvement in two steps: First we calculate the direction the leader of a formation should move towards, we then set all other units in the formation follow in that same direction parallel to the leader. </br>
 Should the formation break while moving due to potential obstacles, we can either have our units that fell out of formation temporarily move slightly faster or have our formation slow down to have those same units catch up and retain the formation.
 
 ### Opponent selection
+In order for us to have our formation function as an attacking unit, we need it to know who to target. We do this by firstly finding the most nearby opponent formation and secondly apply rules to each unit to automatically determine which opposing unit it needs to attack. 
 </br>
+This happens with four different schemes with each having their pros and cons: 
+</br>
+&nbsp;   - Relative selection:  Mirror the units position and target the unit closest to that mirrored position </br>
+&nbsp;   - Leader selection:    Apply a relative selection on the leader and have every other unit also target that unit </br>
+&nbsp;   - Centre selection:    Target the opponent that is positioned most nearby the center of the opponent </br> 
+&nbsp;   - Nearby selection:    Target the opponent that unit is closest to </br> 
+
+
+![image](https://user-images.githubusercontent.com/40210931/150545137-95f376c7-a1f7-4a3f-b5c8-df8f4b6b045c.png)
+
 
 
 ### Combat behavior
-</br>
+We not only need to determine the opponenent selection in combat, we also determine the combat behavior of the formation, and we define five strategies for this: </br>
+
+&nbsp;   1. Overrun: While in this behavior, the formation will continuously keep pushing the units towards the opponent units </br>
+&nbsp;   2. Hold:    While in this behavior, the units will stop moving as long as the units are within range of their attacks</br>
+&nbsp;   3. Retreat: While in this behavior, units will attack the opponent units and during the cooldown period between attacks continuously retreat </br> 
+&nbsp;   4. Bounce:  While in this behavior, units will attack the opponent units and during the first half the cooldown period retreat but will then during the second half move &nbsp;               toward the opponent</br>
+&nbsp;   5. Border: While in this behaviour, units will move outside of the opponents weapons range while the attacks are on cooldown and stand still until the cooldown has     &nbsp;                 ended</br> 
 
 ## Result
 
