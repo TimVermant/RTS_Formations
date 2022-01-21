@@ -1,4 +1,8 @@
 # Battle formations in RTS games
+
+![image](https://user-images.githubusercontent.com/40210931/150549407-d178e545-9db3-4362-b7a6-aa4f8f873ffe.png)
+
+
 ## Introduction
 The usage of battle formations has been pivotal in the creation of Real-Time Strategy games since the release of some of its earliest most succesful games like Age of Empires.  
 Battle formations orignally came from the real world where ancient empires used these to optimize the usage of their soldiers by having them grouped together and positioned in a way that was the most effective for battle.</br>
@@ -17,11 +21,37 @@ Firstly, we divide all units over a number of formations where each formation ca
 The units on every line are then given an offset from eachother which will then give the formation its shape. 
 Our formation is centered around a leader unit positioned in the middle of the first line, which then decides both the general direction and the speed of the formation.
 </br></br>
-There are other parameters regarding the selection of an opponent and the actual combat of a formation that we will get into later, below you can find a list of all the parameters and their brief description: </br>
+A formation class' sole puprpose would be to store all the units, calculate the units desired position in the formation and then tell the units where to move to. An example of what a header of this class would look like:  </br>
 
+```cpp
+class BattleUnitAgent;
 
+class Formation final
+{
+public:
 
-![image](https://user-images.githubusercontent.com/40210931/150529515-922ca158-ce71-4c3d-80d4-97d8b6f5978c.png)
+	Formation(size_t nrOfUnits);
+	~Formation();
+
+	void Render(float dt);
+	void Update(float dt);
+
+	void CreateFormation(float trimWorldSize);
+	void AddUnit(BattleUnitAgent* pUnit);
+
+private:
+	size_t m_FormationMaxSize;
+	BattleUnitAgent* m_pLeaderUnit = nullptr;
+	std::vector<BattleUnitAgent*> m_pUnits;
+	
+	// Formation math variables
+	int m_UnitsPerLine;
+	float m_DistanceBetweenUnitsOnLine;
+	float m_VerticalDistanceBetweenUnitsOnLine;
+	float m_DistanceBetweenLines;
+};
+
+```
 
 ### The positions of the units
 In order to assign every unit to a formation and have it positioned accordingly, there are a few steps we need to take: </br>
@@ -64,11 +94,22 @@ We not only need to determine the opponenent selection in combat, we also determ
 &nbsp;   4. Bounce:  While in this behavior, units will attack the opponent units and during the first half the cooldown period retreat but will then during the second half move &nbsp;               toward the opponent</br>
 &nbsp;   5. Border: While in this behaviour, units will move outside of the opponents weapons range while the attacks are on cooldown and stand still until the cooldown has     &nbsp;                 ended</br> 
 
-## Result
 
 
-</br></br>
 
 ## Conclusion
+To summarise, in order for the formations to work there are a few things we need:
+- Form the shape of the formation
+- Position the units inside of the formation
+- Move the units in formation
+- Have every unit select a target opponent
+- Determine the combat behavior of the formation
+</br>
+I picked this topic because one of the first games I ever played when I was a kid was Age of Mythology which was an RTS game that came out in 2001. Although the RTS genre isn't that popular of a genre anymore, the logic behind battle formations is still quite fascinating and is surprisingly in-depth when it comes to how advanced you can have your formations behave in your game. I'm hoping that in the future this genre becomes popular again so we can see even more complex and intricate designs of new battle formations then we already have and explore how in depth one can go when creating these battle formations.  </br>
+
+
+
 
 ## Sources
+https://sander.landofsand.com/publications/CIG08Heijden.pdf </br>
+https://sandruski.github.io/RTS-Group-Movement/ </br>
