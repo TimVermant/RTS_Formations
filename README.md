@@ -13,15 +13,18 @@ In this research project our code is constructed by having 1 unit be assigned as
 The focus of this project will be on researching how formations act independently, how formations process input and how individual units in a formation behave when attacking an opposing formation. </br>
 
 ## Designing the formation
-In order to dynamically form and move around our formation, there are a few things we are going to need and calculate: the shape of the formation, the position of the units, the movement of the formation, the opponent selection and the combat behaviour. All these aspects will be explained in their upcoming respective section.</br>
+In order to dynamically form and move around our formation, there are a few things we are going to need and calculate; the shape of the formation; the position of the units; the movement of the formation; the opponent selection and the combat behaviour. All these aspects will be explained in their upcoming respective section.</br>
 ### The shape of the formation
-![image](https://user-images.githubusercontent.com/40210931/150534147-63c3ed8e-8d7d-42d7-a63e-85f685ae5329.png)
+
 </br>
 Firstly, we divide all units over a number of formations where each formation can have a different shape. A formation is made up of multiple lines that each have a number of units on them and with a set distance between each other. </br>
 The units on every line are then given an offset from each other which will then give the formation its shape. 
 Our formation is centered around a leader unit positioned in the middle of the first line, which then decides both the general direction and the speed of the formation.
-</br></br>
-A formation class' sole purpose would be to store all the units, calculate the units desired position in the formation and then tell the units where to move to. An example of what a header of this class would look like:  </br>
+
+![image](https://user-images.githubusercontent.com/40210931/150534147-63c3ed8e-8d7d-42d7-a63e-85f685ae5329.png)
+
+</br>
+A formation class' sole purpose would be to store all the units, calculate the units desired position in the formation and then tell the units where to move to. An example of what a header of this class would look like:  </br></br>
 
 ```cpp
 class BattleUnitAgent;
@@ -55,9 +58,9 @@ private:
 
 ### The positions of the units
 In order to assign every unit to a formation and have it positioned accordingly, there are a few steps we need to take: </br>
-&nbsp;   1. Assign the units to their closest formation  </br>
-&nbsp;   2. Distribute the units over the lines in the formation using their Y-Coordinate </br>
-&nbsp;   3. Assign the position of the units on the line according to their X-Coordinate </br> 
+1. Assign the units to their closest formation  </br>
+2. Distribute the units over the lines in the formation using their Y-Coordinate </br>
+3. Assign the position of the units on the line according to their X-Coordinate </br> 
 
 Of course we also assume that some units might die during combat, so in order for the shape of the formation to be maintained we use units from the back to replace units in the front. This is done by only adjusting the position of neighboring units.
 
@@ -75,10 +78,10 @@ In order for us to have our formation function as an attacking unit, we need it 
 </br>
 This happens with four different schemes with each having their pros and cons: 
 </br>
-&nbsp;   - Relative selection:  Mirror the units position and target the unit closest to that mirrored position </br>
-&nbsp;   - Leader selection:    Apply a relative selection on the leader and have every other unit also target that unit </br>
-&nbsp;   - Center selection:    Target the opponent that is positioned most nearby the center of the opponent </br> 
-&nbsp;   - Nearby selection:    Target the opponent that unit is closest to </br> 
+* Relative selection:  Mirror the units position and target the unit closest to that mirrored position </br>
+* Leader selection:    Apply a relative selection on the leader and have every other unit also target that unit </br>
+* Center selection:    Target the opponent that is positioned most nearby the center of the opponent </br> 
+* Nearby selection:    Target the opponent that unit is closest to </br> 
 
 
 ![image](https://user-images.githubusercontent.com/40210931/150545137-95f376c7-a1f7-4a3f-b5c8-df8f4b6b045c.png)
@@ -88,22 +91,22 @@ This happens with four different schemes with each having their pros and cons:
 ### Combat behavior
 We not only need to determine the opponent selection in combat, we also determine the combat behavior of the formation, and we define five strategies for this: </br>
 
-&nbsp;   1. Overrun: While in this behavior, the formation will continuously keep pushing the units towards the opponent units </br>
-&nbsp;   2. Hold:    While in this behavior, the units will stop moving as long as the units are within range of their attacks</br>
-&nbsp;   3. Retreat: While in this behavior, units will attack the opponent units and during the cooldown period between attacks continuously retreat </br> 
-&nbsp;   4. Bounce:  While in this behavior, units will attack the opponent units and during the first half the cooldown period retreat but will then during the second half move &nbsp;               toward the opponent</br>
-&nbsp;   5. Border: While in this behaviour, units will move outside of the opponents weapons range while the attacks are on cooldown and stand still until the cooldown has     &nbsp;                 ended</br> 
+1. Overrun: While in this behavior, the formation will continuously keep pushing the units towards the opponent units </br>
+2. Hold:    While in this behavior, the units will stop moving and let the enemies come into their attack range</br>
+3. Retreat: While in this behavior, units will attack the opponent units and during the cooldown period between attacks continuously retreat </br> 
+4. Bounce:  While in this behavior, units will attack the opponent units and during the first half the cooldown period retreat but will then during the second half move            toward the opponent</br>
+5. Border: While in this behaviour, units will move outside of the opponents weapons range while the attacks are on cooldown and stand still until the cooldown has                  ended</br> 
 
 
 
 
 ## Conclusion
 To summarize, in order for the formations to work there are a few things we need:
-- Form the shape of the formation
-- Position the units inside of the formation
-- Move the units in formation
-- Have every unit select a target opponent
-- Determine the combat behavior of the formation
+* Form the shape of the formation
+* Position the units inside of the formation
+* Move the units in formation
+* Have every unit select a target opponent
+* Determine the combat behavior of the formation
 </br>
 I picked this topic because one of the first games I ever played when I was a kid was Age of Mythology which was an RTS game that came out in 2001. Although the RTS genre isn't that popular of a genre anymore, the logic behind battle formations is still quite fascinating and is surprisingly in-depth when it comes to how advanced you can have your formations behave in your game. I'm hoping that in the future this genre becomes popular again so we can see even more complex and intricate designs of new battle formations then we already have and explore how in depth one can go when creating these battle formations.  </br>
 
