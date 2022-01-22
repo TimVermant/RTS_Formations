@@ -9,8 +9,8 @@ Formation::Formation(size_t nrOfUnits) :
 	m_VerticalDistanceBetweenUnitsOnLine{ 3.f },
 	m_DistanceBetweenLines{ 5.f }
 {
-	
-	
+
+
 
 }
 
@@ -44,7 +44,8 @@ void Formation::CreateFormation(float trimWorldSize)
 {
 
 
-
+	if (m_pLeaderUnit)
+		m_pLeaderUnit->ResetColor();
 	m_pLeaderUnit = GetClosestUnit(trimWorldSize);
 	auto it = std::find(m_pUnits.begin(), m_pUnits.end(), m_pLeaderUnit);
 	std::iter_swap(m_pUnits.begin(), it);
@@ -63,6 +64,29 @@ void Formation::AddUnit(BattleUnitAgent* pUnit)
 {
 	m_pUnits.push_back(pUnit);
 
+}
+
+
+
+
+int& Formation::GetUnitsPerLine()
+{
+	return m_UnitsPerLine;
+}
+
+float& Formation::GetDistanceBetweenUnitsOnLine()
+{
+	return m_DistanceBetweenUnitsOnLine;
+}
+
+float& Formation::GetVerticalDistanceBetweenUnitsOnLine()
+{
+	return m_VerticalDistanceBetweenUnitsOnLine;
+}
+
+float& Formation::GetDistanceBetweenLines()
+{
+	return m_DistanceBetweenLines;
 }
 
 BattleUnitAgent* Formation::GetClosestUnit(float trimWorldSize)
@@ -112,33 +136,56 @@ void Formation::CalculateDesiredFormationPositions()
 	size_t index = 0;
 	for (size_t i{ 0 }; i < m_FormationMaxSize / m_UnitsPerLine; i++)
 	{
+		auto orientation = m_pLeaderUnit->GetOrientation();
+		auto linearVelocity = m_pLeaderUnit->GetLinearVelocity().GetNormalized();
+		Elite::Vector2 orientationVector = Elite::Vector2{std::cosf(orientation),std::sinf(orientation)};
+
+		//Calculate angle between orientation/linearvelocity and add future angle
+		float angle = std::acosf(Elite::Dot(orientationVector, linearVelocity) / (orientationVector.Magnitude()* linearVelocity.Magnitude())) + orientation;
+
+
+
+		Elite::Vector3 forward{ std::cos(angle),std::sin(angle), 0.f };
+		Elite::Vector3 up{ 0.f,0.f,1.f };
+		Elite::Vector3 right = Elite::Cross(forward, up);
+
+		//// To put units behind leader
+		forward *= -1.f;
+
 		// Get middle front position of unit on line
 		startPosition = m_StartPosition;
 		startPosition.y -= m_DistanceBetweenLines * i;
 		m_pUnits[index]->MoveTowards(startPosition);
 		index++;
 		offsetMultiplier = 1;
-		for (size_t j{ 1 }; j < m_UnitsPerLine; j++) // start at index 1 because we already calculated the first position
+		for (size_t j{ 1 }; j < (size_t)m_UnitsPerLine; j++) // start at index 1 because we already calculated the first position
 		{
 			// Reset to start position on line
 			position = startPosition;
+			float xOffset = offsetMultiplier * m_DistanceBetweenUnitsOnLine;
+			float yOffset = offsetMultiplier * m_VerticalDistanceBetweenUnitsOnLine;
 			if (j % 2 != 0) // Odd number
 			{
-				position.x -= offsetMultiplier * m_DistanceBetweenUnitsOnLine;
-				position.y -= offsetMultiplier * m_VerticalDistanceBetweenUnitsOnLine;
-				std::cout << "Odd\n";
+				position.x -= xOffset;
+				position.y -= yOffset;
+
 			}
 			else // Even number
 			{
-				position.x += offsetMultiplier * m_DistanceBetweenUnitsOnLine;
-				position.y -= offsetMultiplier * m_VerticalDistanceBetweenUnitsOnLine;
+				position.x += xOffset;
+				position.y -= yOffset;
 				offsetMultiplier++; // After odd - even we increase the offsetmultiplier
-				std::cout << "Even\n";
-			}
-			
 
-			// Calculate position with a
-			
+			}
+
+
+			// Doesnt work right now
+			/*Elite::Vector3 tempPos{ position.x,position.y,0.f };
+			tempPos = tempPos - forward * yOffset + right * xOffset;
+			position = { tempPos.x,tempPos.y };*/
+
+
+
 			m_pUnits[index]->MoveTowards(position);
 			index++;
 			//m_FormationPositions.push_back(position);

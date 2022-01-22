@@ -4,7 +4,7 @@
 
 class BattleUnitAgent;
 
-class Formation
+class Formation final
 {
 public:
 
@@ -19,6 +19,13 @@ public:
 	void CreateFormation(float trimWorldSize);
 
 	void AddUnit(BattleUnitAgent* pUnit);
+
+
+	//Get reference for IMGUI
+	int& GetUnitsPerLine();
+	float& GetDistanceBetweenUnitsOnLine();
+	float& GetVerticalDistanceBetweenUnitsOnLine();
+	float& GetDistanceBetweenLines();
 
 private:
 	size_t m_FormationMaxSize = 36;

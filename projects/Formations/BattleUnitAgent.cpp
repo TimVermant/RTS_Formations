@@ -4,14 +4,17 @@
 
 BattleUnitAgent::BattleUnitAgent(Elite::Vector2 pos) :BattleUnitAgent{ pos, { 0.8f , 0.8f , 0.8f} }
 {
+	m_pSeek = new Seek{};
 }
 
 BattleUnitAgent::BattleUnitAgent(Elite::Vector2 pos, Elite::Color color)
 {
 	m_BodyColor = color;
-
+	m_DefaultColor = color;
+	m_pSeek = new Seek{};
 	SetPosition(pos);
-	SetMass(1.f);
+	SetMass(0.f);
+	
 	
 }
 
@@ -42,7 +45,12 @@ bool BattleUnitAgent::CanBeDestroyed()
 
 void BattleUnitAgent::MoveTowards(Elite::Vector2 pos)
 {
-	m_pSeek = new Seek{};
+	
 	m_pSeek->SetTarget(pos);
 	SetSteeringBehavior(m_pSeek);
+}
+
+void BattleUnitAgent::ResetColor()
+{
+	SetBodyColor(m_DefaultColor);
 }

@@ -78,6 +78,12 @@ void App_RTSFormations::UpdateUI()
 		m_pFormation->CreateFormation(m_TrimWorldSize);
 	}
 
+	
+	ImGui::InputInt("Units Per Line", &m_pFormation->GetUnitsPerLine());
+
+	ImGui::InputFloat("Distance between units on line", &m_pFormation->GetDistanceBetweenUnitsOnLine());
+	ImGui::InputFloat("Vertical distance between units on line", &m_pFormation->GetVerticalDistanceBetweenUnitsOnLine());
+	ImGui::InputFloat("Distance between lines", &m_pFormation->GetDistanceBetweenLines());
 
 	//End
 	ImGui::PopAllowKeyboardFocus();
@@ -101,11 +107,11 @@ void App_RTSFormations::Render(float deltaTime) const
 
 void App_RTSFormations::AddUnits()
 {
-	
+
 
 	for (size_t i = 0; i < m_NrOfUnits; i++)
 	{
 		Vector2 pos = Elite::randomVector2(-m_TrimWorldSize, m_TrimWorldSize);
-		m_pFormation->AddUnit(new BattleUnitAgent{ pos });
+		m_pFormation->AddUnit(new BattleUnitAgent{ pos, Elite::Color{0.66f,0.42f,0.31f,1.f} });
 	}
 }

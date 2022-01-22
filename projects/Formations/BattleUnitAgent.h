@@ -20,12 +20,14 @@ public:
 
 	void MoveTowards(Elite::Vector2 pos);
 
+	void ResetColor();
 
 
 	const float GetDetectRadius() { return m_DetectRadius; } // Detect radius of agent that gets updated on upgrade
 
 private:
 	
+	Elite::Color m_DefaultColor;
 
 	bool m_ToDestroy = false;
 	float m_SpeedBase = 25.f;

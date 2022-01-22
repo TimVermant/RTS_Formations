@@ -40,6 +40,8 @@ public:
 
 	float GetRadius() const { return m_Radius; }
 
+	void SetRadius(float radius) { m_Radius = radius; }
+
 protected:
 	RigidBody* m_pRigidBody = nullptr;
 	float m_Radius = 1.f;
