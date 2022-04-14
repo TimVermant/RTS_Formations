@@ -46,7 +46,9 @@ void Formation::CreateFormation(float trimWorldSize)
 
 	if (m_pLeaderUnit)
 		m_pLeaderUnit->ResetColor();
+	// Calculates unit that will become the leader unit
 	m_pLeaderUnit = GetClosestUnit(trimWorldSize);
+	// Put the leader unit in the front of the list
 	auto it = std::find(m_pUnits.begin(), m_pUnits.end(), m_pLeaderUnit);
 	std::iter_swap(m_pUnits.begin(), it);
 	m_pUnits[0]->SetBodyColor(Elite::Color{ 1.0f,0.f,0.f,1.f });
@@ -64,6 +66,12 @@ void Formation::AddUnit(BattleUnitAgent* pUnit)
 {
 	m_pUnits.push_back(pUnit);
 
+}
+
+void Formation::SetStartPosition(const Elite::Vector2& startPos)
+{
+	m_StartPosition = startPos;
+	m_UseMouseStartPos = true;
 }
 
 
@@ -111,7 +119,8 @@ BattleUnitAgent* Formation::GetClosestUnit(float trimWorldSize)
 		}
 	}
 	// Find unit closest to leaderpos
-	m_StartPosition = { lowestX + highestX,highestY };
+	if(!m_UseMouseStartPos)
+		m_StartPosition = { lowestX + highestX,highestY };
 	float distance = trimWorldSize * trimWorldSize;
 	BattleUnitAgent* pLeader = nullptr;
 	for (auto pUnit : m_pUnits)

@@ -26,6 +26,13 @@ void App_RTSFormations::Start()
 
 void App_RTSFormations::Update(float deltaTime)
 {
+	if (INPUTMANAGER->IsMouseButtonUp(InputMouseButton::eLeft))
+	{
+		auto const mouseData = INPUTMANAGER->GetMouseData(InputType::eMouseButton, InputMouseButton::eLeft);
+		m_MouseTarget.Position = DEBUGRENDERER2D->GetActiveCamera()->ConvertScreenToWorld({ static_cast<float>(mouseData.X), static_cast<float>(mouseData.Y) });
+		m_pFormation->SetStartPosition(m_MouseTarget.Position);
+	}
+
 
 	UpdateUI();
 
@@ -74,7 +81,7 @@ void App_RTSFormations::UpdateUI()
 
 	if (ImGui::Button("Make formation"))
 	{
-		std::cout << "Button pressed" << std::endl;
+		
 		m_pFormation->CreateFormation(m_TrimWorldSize);
 	}
 
@@ -103,6 +110,7 @@ void App_RTSFormations::Render(float deltaTime) const
 	DEBUGRENDERER2D->DrawPolygon(&points[0], 4, { 1,0,0,1 }, 0.4f);
 
 	m_pFormation->Render(deltaTime);
+	DEBUGRENDERER2D->DrawSolidCircle(m_MouseTarget.Position, 0.3f, { 0.f,0.f }, { 1.f,0.f,0.f }, -0.8f);
 }
 
 void App_RTSFormations::AddUnits()
