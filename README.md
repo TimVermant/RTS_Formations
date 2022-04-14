@@ -5,12 +5,12 @@
 |Table of contents|
 |------------------------------------------------------------------|
 |1. [Introduction](#Introduction)|
-|2. [Designing the formation](#Designing-the-formation) <br>
-	|2.a [The shape of the formation](#The-shape-of-the-formation)<br>
-	|2.b [The positions of the units](#The-positions-of-the-units)<br>
-	|2.c [The movement of the formation](#The-positions-of-the-units)<br>
-	|2.d [Opponent selection](#The-positions-of-the-units)<br>
-	|2.e [Opponent selection](#The-positions-of-the-units)|
+|2. [Designing the formation](#Designing-the-formation)|
+|2.a [The shape of the formation](#The-shape-of-the-formation)|
+|2.b [The positions of the units](#The-positions-of-the-units)|
+|2.c [The movement of the formation](#The-positions-of-the-units)|
+|2.d [Opponent selection](#The-positions-of-the-units)|
+|2.e [Opponent selection](#The-positions-of-the-units)|
 |3. [Conclusion](#Conclusion)|
 |4. [Sources](#Sources)|
 
