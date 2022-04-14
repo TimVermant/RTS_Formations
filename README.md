@@ -2,17 +2,17 @@
 
 ![image](https://user-images.githubusercontent.com/40210931/150555412-9e7eea49-062a-431a-8c0c-4a88e781559f.png)
 
-|Table of contents|
-|------------------------------------------------------------------|
-|1.| [Introduction](#Introduction)|
-|2.| [Designing the formation](#Designing-the-formation)|
-|2.a| [The shape of the formation](#The-shape-of-the-formation)|
-|2.b| [The positions of the units](#The-positions-of-the-units)|
-|2.c| [The movement of the formation](#The-positions-of-the-units)|
-|2.d| [Opponent selection](#The-positions-of-the-units)|
-|2.e| [Opponent selection](#The-positions-of-the-units)|
-|3.| [Conclusion](#Conclusion)|
-|4.| [Sources](#Sources)|
+## Table of contents
+-----
+1. [Introduction](#Introduction)
+2. [Designing the formation](#Designing-the-formation) <br>
+2.a [The shape of the formation](#The-shape-of-the-formation)<br>
+2.b [The positions of the units](#The-positions-of-the-units)<br>
+2.c [The movement of the formation](#The-movement-of-the-formation)<br>
+2.d [Opponent selection](#Opponent-selection)<br>
+2.e [Combat behavior](#Combat-behavior)<br>
+3. [Conclusion](#Conclusion)
+4. [Sources](#Sources)
 
 ## Introduction
 The usage of battle formations has been pivotal in the creation of Real-Time Strategy games since the release of some of its earliest most successful games like Age of Empires.  
