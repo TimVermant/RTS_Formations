@@ -2,7 +2,7 @@
 
 ![image](https://user-images.githubusercontent.com/40210931/150555412-9e7eea49-062a-431a-8c0c-4a88e781559f.png)
 1. [Introduction](#Introduction)
-2. [Designing the formation](#Designing-the-formation)
+2. [Designing the formation](#Designing-the-formation) <br>
 2.1 [The shape of the formation](#The-shape-of-the-formation)
 
 ## Introduction
