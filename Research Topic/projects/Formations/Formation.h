@@ -22,7 +22,6 @@ public:
 
 	void AddUnit(BattleUnitAgent* pUnit);
 
-	void SetStartPosition(const Elite::Vector2& startPos);
 
 
 	//Get reference for IMGUI
@@ -46,7 +45,10 @@ private:
 	BattleUnitAgent* GetClosestUnit(float trimWorldSize, Elite::Vector2 startPosition);
 	void CalculateDesiredFormationPositions();
 	
-	bool m_UseMouseStartPos = false;
+
+	float AngleBetweenVectors(Elite::Vector2 A, Elite::Vector2 B);
+	
+
 	// Formation math variables
 
 	int m_UnitsPerLine;

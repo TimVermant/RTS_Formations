@@ -29,12 +29,7 @@ void App_RTSFormations::Start()
 
 void App_RTSFormations::Update(float deltaTime)
 {
-	if (INPUTMANAGER->IsMouseButtonUp(InputMouseButton::eLeft))
-	{
-		auto const mouseData = INPUTMANAGER->GetMouseData(InputType::eMouseButton, InputMouseButton::eLeft);
-		m_MouseTarget.Position = DEBUGRENDERER2D->GetActiveCamera()->ConvertScreenToWorld({ static_cast<float>(mouseData.X), static_cast<float>(mouseData.Y) });
-		m_pFormation->SetStartPosition(m_MouseTarget.Position);
-	}
+	
 
 
 	UpdateUI();

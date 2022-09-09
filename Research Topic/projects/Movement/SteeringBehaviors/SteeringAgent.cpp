@@ -33,6 +33,9 @@ void SteeringAgent::Update(float dt)
 			if (output.AngularVelocity > m_MaxAngularSpeed)
 				output.AngularVelocity = m_MaxAngularSpeed;
 			SetAngularVelocity(output.AngularVelocity);
+
+			auto desiredOrientation = Elite::GetOrientationFromVelocity(GetLinearVelocity());
+			SetRotation(desiredOrientation);
 		}
 	}
 }

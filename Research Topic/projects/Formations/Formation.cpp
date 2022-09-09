@@ -56,10 +56,7 @@ void Formation::CreateFormation(float trimWorldSize)
 
 	CalculateDesiredFormationPositions();
 
-	/*for (size_t i{ 0 }; i < m_pUnits.size(); i++)
-	{
-		m_pUnits[i]->SetPosition(m_FormationPositions[i]);
-	}*/
+
 
 }
 
@@ -78,10 +75,7 @@ void Formation::CreateFormation(float trimWorldSize, Elite::Vector2 startPositio
 
 	CalculateDesiredFormationPositions();
 
-	/*for (size_t i{ 0 }; i < m_pUnits.size(); i++)
-	{
-		m_pUnits[i]->SetPosition(m_FormationPositions[i]);
-	}*/
+
 
 }
 
@@ -89,12 +83,6 @@ void Formation::AddUnit(BattleUnitAgent* pUnit)
 {
 	m_pUnits.push_back(pUnit);
 
-}
-
-void Formation::SetStartPosition(const Elite::Vector2& startPos)
-{
-	m_StartPosition = startPos;
-	m_UseMouseStartPos = true;
 }
 
 
@@ -148,6 +136,8 @@ BattleUnitAgent* Formation::GetClosestUnit(float trimWorldSize)
 	}
 	// Find unit closest to leaderpos
 	m_StartPosition = { lowestX + highestX,highestY };
+	if (m_bRetainLeaderUnit)
+		return m_pLeaderUnit;
 	float distance = trimWorldSize * trimWorldSize;
 	BattleUnitAgent* pLeader = nullptr;
 	for (auto pUnit : m_pUnits)
@@ -160,9 +150,37 @@ BattleUnitAgent* Formation::GetClosestUnit(float trimWorldSize)
 		}
 
 	}
+	if (pLeader == nullptr)
+		return m_pLeaderUnit;
 
 	return pLeader;
 }
+
+BattleUnitAgent* Formation::GetClosestUnit(float trimWorldSize, Elite::Vector2 startPosition)
+{
+
+	m_StartPosition = startPosition;
+	if (m_bRetainLeaderUnit)
+		return m_pLeaderUnit;
+	float distance = trimWorldSize * trimWorldSize;
+	BattleUnitAgent* pLeader = nullptr;
+	for (auto pUnit : m_pUnits)
+	{
+		// Check squared distance to find closest point
+		if (distance > pUnit->GetPosition().DistanceSquared(m_StartPosition))
+		{
+			distance = pUnit->GetPosition().DistanceSquared(m_StartPosition);
+			pLeader = pUnit;
+		}
+
+	}
+	if (pLeader == nullptr)
+		return m_pLeaderUnit;
+
+	return pLeader;
+}
+
+
 
 
 
@@ -175,21 +193,28 @@ void Formation::CalculateDesiredFormationPositions()
 	size_t index = 0;
 	for (size_t i{ 0 }; i < m_FormationMaxSize / m_UnitsPerLine; i++)
 	{
-		auto orientation = m_pLeaderUnit->GetOrientation();
-		auto linearVelocity = m_pLeaderUnit->GetLinearVelocity().GetNormalized();
-		Elite::Vector2 orientationVector = Elite::Vector2{ std::cosf(orientation),std::sinf(orientation) };
 
-		//Calculate angle between orientation/linearvelocity and add future angle
-		float angle = std::acosf(Elite::Dot(orientationVector, linearVelocity) / (orientationVector.Magnitude() * linearVelocity.Magnitude())) + orientation;
-		std::cout << "Rotation angle: " << angle << m_pLeaderUnit->GetDirection() << std::endl;
+		//// Rotation
 
 
-		Elite::Vector3 forward{ std::cos(angle),std::sin(angle), 0.f };
-		Elite::Vector3 up{ 0.f,0.f,1.f };
-		Elite::Vector3 right = Elite::Cross(forward, up);
+		//auto orientation = m_pLeaderUnit->GetOrientation();
+		//auto linearVelocity = m_pLeaderUnit->GetLinearVelocity().GetNormalized();
+		//Elite::Vector2 orientationVector = Elite::Vector2{ std::cosf(orientation),std::sinf(orientation) };
 
-		// To put units behind leader
-		forward *= -1.f;
+		////Calculate angle between orientation/linearvelocity and add future angle
+		//float angle = std::acosf(Elite::Dot(orientationVector, linearVelocity) / (orientationVector.Magnitude() * linearVelocity.Magnitude())) + orientation;
+
+
+		//float newX = orientationVector.x * cosf(angle) - orientationVector.y * sinf(angle);
+		//float newY = orientationVector.x * sinf(angle) + orientationVector.y * cosf(angle);
+
+		//std::cout << newX << " - " << newY << std::endl;
+
+
+
+
+
+
 
 		// Get middle front position of unit on line
 		startPosition = m_StartPosition;
@@ -219,16 +244,40 @@ void Formation::CalculateDesiredFormationPositions()
 
 
 			// Doesnt work right now
-			/*Elite::Vector3 tempPos{ position.x,position.y,0.f };
-			tempPos = tempPos - forward * yOffset + right * xOffset;
-			position = { tempPos.x,tempPos.y };*/
+			Elite::Vector2 tempPos{ position.x,position.y};
+			// Because rotation isnt around origin
+			tempPos -= m_StartPosition;
 
+			auto leadOrientation = m_pLeaderUnit->GetOrientation();
+			auto unitOrientation = m_pUnits[index]->GetOrientation();
+			
+			float angle = AngleBetweenVectors(
+				Elite::Vector2{ std::cosf(leadOrientation),std::sinf(leadOrientation) }, 
+				Elite::Vector2{ std::cosf(unitOrientation),std::sinf(unitOrientation) } 
+			);
 
+		
 
-			m_pUnits[index]->MoveTowards(position);
+			//// Rotate it
+			//float newX = tempPos.x * cosf(angle) - tempPos.y * sinf(angle);
+			//float newY = tempPos.x * sinf(angle) + tempPos.y * cosf(angle);
+			//tempPos = { newX,newY };
+
+			// Translate it back 
+			tempPos += m_StartPosition;
+
+			m_pUnits[index]->MoveTowards(tempPos);
 			index++;
-			//m_FormationPositions.push_back(position);
+			
 		}
 	}
 }
+
+float Formation::AngleBetweenVectors(Elite::Vector2 A, Elite::Vector2 B)
+{
+	float angle = Elite::Dot(A, B) / (A.Magnitude() * B.Magnitude());
+	return acosf(angle);
+}
+
+
 

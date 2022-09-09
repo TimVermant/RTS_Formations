@@ -40,6 +40,7 @@ SteeringOutput Flee::CalculateSteering(float deltaT, SteeringAgent* pAgent)
 	steering.LinearVelocity = m_Target.Position - pAgent->GetPosition();
 	steering.LinearVelocity.Normalize();
 	steering.LinearVelocity *= -pAgent->GetMaxLinearSpeed();
+	
 
 
 	if (pAgent->CanRenderBehavior())

@@ -26,6 +26,7 @@ public:
 
 	//Seek Functions
 	void SetTarget(const TargetData& target) { m_Target = target; }
+	TargetData GetTarget() const { return m_Target; }
 
 	template<class T, typename std::enable_if<std::is_base_of<ISteeringBehavior, T>::value>::type* = nullptr>
 	T* As()
