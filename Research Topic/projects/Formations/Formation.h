@@ -17,6 +17,8 @@ public:
 
 
 	void CreateFormation(float trimWorldSize);
+	void CreateFormation(float trimWorldSize, Elite::Vector2 startPosition);
+
 
 	void AddUnit(BattleUnitAgent* pUnit);
 
@@ -26,6 +28,7 @@ public:
 	float& GetDistanceBetweenUnitsOnLine();
 	float& GetVerticalDistanceBetweenUnitsOnLine();
 	float& GetDistanceBetweenLines();
+	bool& GetRetainLeader();
 
 private:
 	size_t m_FormationMaxSize = 36;
@@ -35,9 +38,11 @@ private:
 	
 	std::vector<Elite::Vector2> m_FormationPositions;
 	Elite::Vector2 m_StartPosition;
+	bool m_bRetainLeaderUnit = false;
 
 	// Helpers
 	BattleUnitAgent* GetClosestUnit(float trimWorldSize);
+	BattleUnitAgent* GetClosestUnit(float trimWorldSize, Elite::Vector2 startPosition);
 	void CalculateDesiredFormationPositions();
 	
 

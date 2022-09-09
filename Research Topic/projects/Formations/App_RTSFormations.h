@@ -24,11 +24,14 @@ public:
 	void Start() override;
 	void Update(float deltaTime) override;
 	void UpdateUI();
+	void UpdateMouse();
 	void Render(float deltaTime) const override;
 
 
 private:
 	float m_TrimWorldSize = 70.f;
+	Elite::Vector2 m_LastMousePos;
+	bool m_bMouseClicked = false;
 
 	Formation* m_pFormation;
 

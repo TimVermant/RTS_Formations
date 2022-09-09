@@ -1,6 +1,11 @@
 //Precompiled Header [ALWAYS ON TOP IN CPP]
 #include "stdafx.h"
 
+
+
+
+//--------------------------------------
+
 //-----------------------------------------------------------------
 // Includes
 //-----------------------------------------------------------------
@@ -150,6 +155,8 @@ int main(int argc, char* argv[])
 		DEBUGRENDERER2D->Destroy();
 		INPUTMANAGER->Destroy();
 		TIMER->Destroy();
+
+		
 	}
 	catch (const Elite_Exception& e)
 	{

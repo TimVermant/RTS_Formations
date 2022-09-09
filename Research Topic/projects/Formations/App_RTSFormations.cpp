@@ -1,6 +1,7 @@
 //Precompiled Header [ALWAYS ON TOP IN CPP]
 #include "stdafx.h"
 
+
 using namespace Elite;
 
 #include "App_RTSFormations.h"
@@ -8,6 +9,8 @@ using namespace Elite;
 App_RTSFormations::~App_RTSFormations()
 {
 	SAFE_DELETE(m_pFormation);
+
+
 }
 
 void App_RTSFormations::Start()
@@ -28,7 +31,7 @@ void App_RTSFormations::Update(float deltaTime)
 {
 
 	UpdateUI();
-
+	UpdateMouse();
 	m_pFormation->Update(deltaTime);
 }
 
@@ -75,20 +78,36 @@ void App_RTSFormations::UpdateUI()
 	if (ImGui::Button("Make formation"))
 	{
 		std::cout << "Button pressed" << std::endl;
-		m_pFormation->CreateFormation(m_TrimWorldSize);
+		if(!m_bMouseClicked)
+			m_pFormation->CreateFormation(m_TrimWorldSize);
+		else
+			m_pFormation->CreateFormation(m_TrimWorldSize, m_LastMousePos);
 	}
 
-	
+
 	ImGui::InputInt("Units Per Line", &m_pFormation->GetUnitsPerLine());
 
 	ImGui::InputFloat("Distance between units on line", &m_pFormation->GetDistanceBetweenUnitsOnLine());
 	ImGui::InputFloat("Vertical distance between units on line", &m_pFormation->GetVerticalDistanceBetweenUnitsOnLine());
 	ImGui::InputFloat("Distance between lines", &m_pFormation->GetDistanceBetweenLines());
+	ImGui::Checkbox("Retain leader?", &m_pFormation->GetRetainLeader());
 
 	//End
 	ImGui::PopAllowKeyboardFocus();
 	ImGui::End();
 }
+
+void App_RTSFormations::UpdateMouse()
+{
+	auto mouseData = INPUTMANAGER->GetMouseData(Elite::InputType::eMouseButton, Elite::InputMouseButton::eLeft);
+	if (INPUTMANAGER->IsMouseButtonDown(Elite::InputMouseButton::eLeft))
+	{
+		m_bMouseClicked = true;
+		m_LastMousePos = DEBUGRENDERER2D->GetActiveCamera()->ConvertScreenToWorld(
+			Elite::Vector2((float)mouseData.X, (float)mouseData.Y));
+	}
+}
+
 
 void App_RTSFormations::Render(float deltaTime) const
 {
@@ -101,6 +120,8 @@ void App_RTSFormations::Render(float deltaTime) const
 		{ -m_TrimWorldSize, -m_TrimWorldSize }
 	};
 	DEBUGRENDERER2D->DrawPolygon(&points[0], 4, { 1,0,0,1 }, 0.4f);
+	if(m_bMouseClicked)
+		DEBUGRENDERER2D->DrawCircle(m_LastMousePos, 1.f, { 1,0,0,1 }, 0.4f);
 
 	m_pFormation->Render(deltaTime);
 }
