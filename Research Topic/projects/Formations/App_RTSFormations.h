@@ -35,6 +35,8 @@ private:
 
 	Formation* m_pFormation;
 
+	TargetData m_MouseTarget;
+
 	void AddUnits();
 
 	// Formation parameters

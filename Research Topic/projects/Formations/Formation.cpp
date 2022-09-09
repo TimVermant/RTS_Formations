@@ -46,6 +46,7 @@ void Formation::CreateFormation(float trimWorldSize)
 	// Resets/recalculates the closest unit
 	if (m_pLeaderUnit)
 		m_pLeaderUnit->ResetColor();
+	// Calculates unit that will become the leader unit
 	m_pLeaderUnit = GetClosestUnit(trimWorldSize);
 
 
@@ -88,6 +89,12 @@ void Formation::AddUnit(BattleUnitAgent* pUnit)
 {
 	m_pUnits.push_back(pUnit);
 
+}
+
+void Formation::SetStartPosition(const Elite::Vector2& startPos)
+{
+	m_StartPosition = startPos;
+	m_UseMouseStartPos = true;
 }
 
 
@@ -141,30 +148,6 @@ BattleUnitAgent* Formation::GetClosestUnit(float trimWorldSize)
 	}
 	// Find unit closest to leaderpos
 	m_StartPosition = { lowestX + highestX,highestY };
-	if (m_bRetainLeaderUnit)
-		return m_pLeaderUnit;
-
-	float distance = trimWorldSize * trimWorldSize;
-	BattleUnitAgent* pLeader = nullptr;
-	for (auto pUnit : m_pUnits)
-	{
-		// Check squared distance to find closest point
-		if (distance > pUnit->GetPosition().DistanceSquared(m_StartPosition))
-		{
-			distance = pUnit->GetPosition().DistanceSquared(m_StartPosition);
-			pLeader = pUnit;
-		}
-
-	}
-
-	return pLeader;
-}
-
-BattleUnitAgent* Formation::GetClosestUnit(float trimWorldSize, Elite::Vector2 startPosition)
-{
-	m_StartPosition = startPosition;
-	if (m_bRetainLeaderUnit)
-		return m_pLeaderUnit;
 	float distance = trimWorldSize * trimWorldSize;
 	BattleUnitAgent* pLeader = nullptr;
 	for (auto pUnit : m_pUnits)

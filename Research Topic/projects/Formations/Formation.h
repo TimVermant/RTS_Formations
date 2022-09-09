@@ -22,6 +22,8 @@ public:
 
 	void AddUnit(BattleUnitAgent* pUnit);
 
+	void SetStartPosition(const Elite::Vector2& startPos);
+
 
 	//Get reference for IMGUI
 	int& GetUnitsPerLine();
@@ -36,7 +38,6 @@ private:
 	BattleUnitAgent* m_pLeaderUnit = nullptr;
 	std::vector<BattleUnitAgent*> m_pUnits;
 	
-	std::vector<Elite::Vector2> m_FormationPositions;
 	Elite::Vector2 m_StartPosition;
 	bool m_bRetainLeaderUnit = false;
 
@@ -45,7 +46,7 @@ private:
 	BattleUnitAgent* GetClosestUnit(float trimWorldSize, Elite::Vector2 startPosition);
 	void CalculateDesiredFormationPositions();
 	
-
+	bool m_UseMouseStartPos = false;
 	// Formation math variables
 
 	int m_UnitsPerLine;
