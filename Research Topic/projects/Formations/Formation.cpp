@@ -191,6 +191,8 @@ void Formation::CalculateDesiredFormationPositions()
 	Elite::Vector2 startPosition = m_StartPosition;
 	int offsetMultiplier;
 	size_t index = 0;
+
+	//RotateLeadUnit();
 	for (size_t i{ 0 }; i < m_FormationMaxSize / m_UnitsPerLine; i++)
 	{
 
@@ -259,9 +261,9 @@ void Formation::CalculateDesiredFormationPositions()
 		
 
 			//// Rotate it
-			//float newX = tempPos.x * cosf(angle) - tempPos.y * sinf(angle);
-			//float newY = tempPos.x * sinf(angle) + tempPos.y * cosf(angle);
-			//tempPos = { newX,newY };
+			float newX = tempPos.x * cosf(angle) - tempPos.y * sinf(angle);
+			float newY = tempPos.x * sinf(angle) + tempPos.y * cosf(angle);
+			tempPos = { newX,newY };
 
 			// Translate it back 
 			tempPos += m_StartPosition;
@@ -270,7 +272,17 @@ void Formation::CalculateDesiredFormationPositions()
 			index++;
 			
 		}
-	}
+	 }
+}
+
+void Formation::RotateLeadUnit()
+{
+	Elite::Vector2 desiredDirection = m_StartPosition - m_pLeaderUnit->GetPosition();
+	Elite::Vector2 currentDirection = Elite::Vector2{ std::cosf(m_pLeaderUnit->GetOrientation()),std::sinf(m_pLeaderUnit->GetOrientation()) };
+	float angle = AngleBetweenVectors(desiredDirection, currentDirection);
+	std::cout << angle << " - " << m_pLeaderUnit->GetRotation() << std::endl;
+	m_pLeaderUnit->SetRotation(angle);
+	
 }
 
 float Formation::AngleBetweenVectors(Elite::Vector2 A, Elite::Vector2 B)

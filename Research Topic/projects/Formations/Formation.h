@@ -45,6 +45,7 @@ private:
 	BattleUnitAgent* GetClosestUnit(float trimWorldSize, Elite::Vector2 startPosition);
 	void CalculateDesiredFormationPositions();
 	
+	void RotateLeadUnit();
 
 	float AngleBetweenVectors(Elite::Vector2 A, Elite::Vector2 B);
 	

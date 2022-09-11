@@ -18,7 +18,9 @@ public:
 	void MarkForDestroy();
 	bool CanBeDestroyed();
 
+	
 	void MoveTowards(Elite::Vector2 pos);
+	void RotateTowards(Elite::Vector2 pos);
 
 	void ResetColor();
 

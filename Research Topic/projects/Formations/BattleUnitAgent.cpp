@@ -31,12 +31,12 @@ void BattleUnitAgent::Update(float dt)
 {
 
 	SteeringAgent::Update(dt);
-	if (Elite::Distance(GetPosition(), m_pSeek->GetTarget().Position) < 0.2f)
-	{
-		SetLinearVelocity(GetLinearVelocity() * Elite::Vector2{ 0.5f,0.5f });
-		m_pFace->SetTarget(m_pSeek->GetTarget().Position);
-		SetSteeringBehavior(m_pFace);
-	}
+	//if (Elite::Distance(GetPosition(), m_pSeek->GetTarget().Position) < 0.2f)
+	//{
+	//	SetLinearVelocity(GetLinearVelocity() * Elite::Vector2{ 0.5f,0.5f });
+	//	m_pFace->SetTarget(m_pSeek->GetTarget().Position);
+	//	SetSteeringBehavior(m_pFace);
+	//}
 }
 
 void BattleUnitAgent::Render(float dt)
@@ -60,6 +60,15 @@ void BattleUnitAgent::MoveTowards(Elite::Vector2 pos)
 	m_pSeek->SetTarget(pos);
 	SetSteeringBehavior(m_pSeek);
 }
+
+
+void BattleUnitAgent::RotateTowards(Elite::Vector2 pos)
+{
+
+	m_pFace->SetTarget(pos);
+	SetSteeringBehavior(m_pFace);
+}
+
 
 void BattleUnitAgent::ResetColor()
 {
