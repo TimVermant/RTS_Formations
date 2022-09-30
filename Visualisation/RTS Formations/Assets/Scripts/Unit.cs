@@ -6,37 +6,50 @@ public class Unit : MonoBehaviour
 {
 
     [SerializeField] Camera _camera;
+
+    [SerializeField] private Material _unitMaterial;
+    [SerializeField] private Material _leaderMaterial;
+
     private Vector3 _targetPosition;
+    public Vector3 TargetPosition
+    {
+        get { return _targetPosition; }
+        set { _targetPosition = value; }
+    }
     private float _speed = 2.0f;
 
+    private bool _isLeader = false;
+
+
+    private MeshRenderer _meshRenderer;
 
 
     private void Start()
     {
-
+        _camera = FindObjectOfType<Camera>();
+        _meshRenderer = GetComponent<MeshRenderer>();
     }
-    // Update is called once per frame
-    void Update()
+
+    private void Update()
     {
-       // Vector3 mousePos = Input.mousePosition;
-       //// mousePos.z = _camera.nearClipPlane;
-       // _targetPosition = _camera.ScreenToWorldPoint(mousePos);
-       // _targetPosition.y = 0.0f;
-       // Debug.Log(_targetPosition);
-
-       // //float step = Time.fixedDeltaTime * _speed;
-       // //transform.position = Vector3.MoveTowards(transform.position, _targetPosition, step);
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray,out RaycastHit hit))
+        if(_isLeader)
         {
-            Debug.Log(hit.point);
-            Vector3 targetPos = hit.point;
-            targetPos.y = 0.0f;
             float step = Time.fixedDeltaTime * _speed;
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
+            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, step);
         }
-
-        // Debug.Log(ray.GetPoint(distance));
     }
+
+    public void MakeLeader(Vector3 startPos)
+    {
+        _meshRenderer.sharedMaterial = _leaderMaterial;
+        _isLeader = true;
+        _targetPosition = startPos;
+    }
+
+    public void ResetUnit()
+    {
+        _meshRenderer.sharedMaterial = _unitMaterial;
+        _isLeader = false;
+    }
+
 }
