@@ -243,7 +243,7 @@ void Formation::CalculateDesiredFormationPositions()
 				offsetMultiplier++; // After odd - even we increase the offsetmultiplier
 
 			}
-
+			
 
 			// Doesnt work right now
 			Elite::Vector2 tempPos{ position.x,position.y};
