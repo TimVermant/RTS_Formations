@@ -29,7 +29,7 @@ public class Formation : MonoBehaviour
         {
             _units.Add(unit);
         }
-        Debug.Log(units.Length);
+        _formationMaxSize = _units.Count;
     }
 
     private void Update()
