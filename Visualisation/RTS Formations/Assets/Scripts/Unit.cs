@@ -19,7 +19,7 @@ public class Unit : MonoBehaviour
     private float _speed = 2.0f;
 
     private bool _isLeader = false;
-
+    private bool _isMoving = false;
 
     private MeshRenderer _meshRenderer;
 
@@ -32,7 +32,7 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        if(_isLeader)
+        if (_isMoving)
         {
             float step = Time.fixedDeltaTime * _speed;
             transform.position = Vector3.MoveTowards(transform.position, _targetPosition, step);
@@ -44,12 +44,19 @@ public class Unit : MonoBehaviour
         _meshRenderer.sharedMaterial = _leaderMaterial;
         _isLeader = true;
         _targetPosition = startPos;
+        _isMoving = true;
     }
 
     public void ResetUnit()
     {
         _meshRenderer.sharedMaterial = _unitMaterial;
         _isLeader = false;
+        _isMoving = false;
     }
 
+    public void MoveTowards(Vector3 target)
+    {
+        _targetPosition = target;
+        _isMoving = true;
+    }
 }

@@ -849,6 +849,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4834836393359076755, guid: 7564621f466af7b4fb98fbc76c25c50c, type: 3}
+      propertyPath: _lineDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834836393359076755, guid: 7564621f466af7b4fb98fbc76c25c50c, type: 3}
+      propertyPath: _unitsPerLine
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834836393359076755, guid: 7564621f466af7b4fb98fbc76c25c50c, type: 3}
+      propertyPath: _formationMaxSize
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834836393359076755, guid: 7564621f466af7b4fb98fbc76c25c50c, type: 3}
+      propertyPath: _verticalDistanceUnits
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834836393359076755, guid: 7564621f466af7b4fb98fbc76c25c50c, type: 3}
+      propertyPath: _horizontalDistanceUnits
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5603983462958847280, guid: 7564621f466af7b4fb98fbc76c25c50c, type: 3}
       propertyPath: m_Name
       value: Formation

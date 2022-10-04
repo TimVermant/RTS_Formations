@@ -6,12 +6,15 @@ using UnityEngine.UI;
 public class Formation : MonoBehaviour
 {
     // Calculations
-    [SerializeField] private int _unitsPerLine;
-    [SerializeField] private float _horizontalDistanceUnits;
-    [SerializeField] private float _verticalDistanceUnits;
-    [SerializeField] private float _lineDistance;
+    [SerializeField] private int _unitsPerLine = 2;
+    [SerializeField] private float _horizontalDistanceUnits = 4.0f; // Horizontal distance of units on the samel ine
+    [SerializeField] private float _verticalDistanceUnits = 3.0f; // Vertical distance of units on the same line
+    [SerializeField] private float _lineDistance = 5.0f; // Distance between 2 lines
+
+    [SerializeField] private float _formationMaxSize = 20.0f;
 
     private Vector3 _desiredLeaderPos;
+    private Vector3 _startPosition;
 
     private bool _retainLeaderUnit = false;
 
@@ -55,7 +58,9 @@ public class Formation : MonoBehaviour
         Swap(index, 0);
         _units[0].MakeLeader(startPos);
 
-        
+        CalculateDesiredPositions();
+
+
     }
 
     private void Swap(int index1, int index2)
@@ -67,7 +72,7 @@ public class Formation : MonoBehaviour
 
     private void GetClosestUnit(Vector3 startPos)
     {
-        _desiredLeaderPos = startPos;
+        _startPosition = startPos;
         if (_retainLeaderUnit)
         {
             return;
@@ -77,9 +82,9 @@ public class Formation : MonoBehaviour
         Unit leaderUnit = null;
         foreach (Unit unit in _units)
         {
-            if (distance > Vector3.Distance(_desiredLeaderPos, unit.transform.position))
+            if (distance > Vector3.Distance(_startPosition, unit.transform.position))
             {
-                distance = Vector3.Distance(_desiredLeaderPos, unit.transform.position);
+                distance = Vector3.Distance(_startPosition, unit.transform.position);
                 leaderUnit = unit;
             }
         }
@@ -88,6 +93,47 @@ public class Formation : MonoBehaviour
 
     }
 
+    private void CalculateDesiredPositions()
+    {
+        Vector3 position = new();
+        Vector3 startPos = _startPosition;
+        int offsetMultiplier;
+        int index = 0;
 
+        for (int i = 0; i < _formationMaxSize / _unitsPerLine; i++)
+        {
+            // Get middle front position of unit on line
+            startPos = _startPosition;
+            startPos.z -= _lineDistance * i;
+            _units[index].MoveTowards(startPos);
+            index++;
+            offsetMultiplier = 1;
+            for (int j = 1; j < _unitsPerLine; j++)//Start at index 1 because we already calculated the first position
+            {
+                // Reset to start position on line
+                position = startPos;
+                Debug.Log(position);
+
+                float xOffset = offsetMultiplier * _horizontalDistanceUnits;
+                float zOffset = offsetMultiplier * _verticalDistanceUnits;
+                if (j % 2 != 0) // Odd number
+                {
+                    position.x -= xOffset;
+                    position.z -= zOffset;
+                }
+                else // Even number
+                {
+                    position.x += xOffset;
+                    position.z -= zOffset;
+                    offsetMultiplier++; // After odd - even we increase the offsetmultiplier
+                }
+
+                _units[index].MoveTowards(position);
+                index++;
+
+            }
+
+        }
+    }
 
 }
