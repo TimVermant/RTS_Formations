@@ -58,5 +58,6 @@ public class Unit : MonoBehaviour
     {
         _targetPosition = target;
         _isMoving = true;
+       // transform.LookAt(target); 
     }
 }

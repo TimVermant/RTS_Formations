@@ -106,6 +106,14 @@ public class Formation : MonoBehaviour
             startPos = _startPosition;
             startPos.z -= _lineDistance * i;
             _units[index].MoveTowards(startPos);
+            if (_units[index] == _leaderUnit)
+            {
+                _units[index].transform.LookAt(startPos);
+            }
+            else
+            {
+                _units[index].transform.forward = _leaderUnit.transform.forward;
+            }
             index++;
             offsetMultiplier = 1;
             for (int j = 1; j < _unitsPerLine; j++)//Start at index 1 because we already calculated the first position
@@ -129,6 +137,14 @@ public class Formation : MonoBehaviour
                 }
 
                 _units[index].MoveTowards(position);
+                if (_units[index] == _leaderUnit)
+                {
+                    _units[index].transform.LookAt(startPos);
+                }
+                else
+                {
+                    _units[index].transform.forward = _leaderUnit.transform.forward;
+                }
                 index++;
 
             }
