@@ -14,7 +14,7 @@ public class Formation : MonoBehaviour
     [SerializeField] private float _formationMaxSize = 20.0f;
 
     private Vector3 _desiredLeaderPos;
-    private Vector3 _startPosition;
+    private Vector3 _targetPosition;
 
     private bool _retainLeaderUnit = false;
 
@@ -72,7 +72,7 @@ public class Formation : MonoBehaviour
 
     private void GetClosestUnit(Vector3 startPos)
     {
-        _startPosition = startPos;
+        _targetPosition = startPos;
         if (_retainLeaderUnit)
         {
             return;
@@ -82,9 +82,9 @@ public class Formation : MonoBehaviour
         Unit leaderUnit = null;
         foreach (Unit unit in _units)
         {
-            if (distance > Vector3.Distance(_startPosition, unit.transform.position))
+            if (distance > Vector3.Distance(_targetPosition, unit.transform.position))
             {
-                distance = Vector3.Distance(_startPosition, unit.transform.position);
+                distance = Vector3.Distance(_targetPosition, unit.transform.position);
                 leaderUnit = unit;
             }
         }
@@ -96,15 +96,25 @@ public class Formation : MonoBehaviour
     private void CalculateDesiredPositions()
     {
         Vector3 position = new();
-        Vector3 startPos = _startPosition;
+        Vector3 startPos = _targetPosition;
         int offsetMultiplier;
         int index = 0;
+
+        // Negative direction of leader
+        Vector3 direction = _targetPosition - _leaderUnit.transform.position;
+        direction = direction.normalized * -1.0f;
+
+
+
 
         for (int i = 0; i < _formationMaxSize / _unitsPerLine; i++)
         {
             // Get middle front position of unit on line
-            startPos = _startPosition;
-            startPos.z -= _lineDistance * i;
+            startPos = _targetPosition;
+
+            startPos += direction * _lineDistance * i;
+
+
             _units[index].MoveTowards(startPos);
             if (_units[index] == _leaderUnit)
             {
@@ -120,21 +130,37 @@ public class Formation : MonoBehaviour
             {
                 // Reset to start position on line
                 position = startPos;
-                Debug.Log(position);
 
-                float xOffset = offsetMultiplier * _horizontalDistanceUnits;
-                float zOffset = offsetMultiplier * _verticalDistanceUnits;
+                // calculate right vector
+                Vector3 rightVec = Vector3.Cross(Vector3.up, direction).normalized;
+
+                position += direction * _verticalDistanceUnits * offsetMultiplier;
+
                 if (j % 2 != 0) // Odd number
                 {
-                    position.x -= xOffset;
-                    position.z -= zOffset;
+                    position += rightVec * offsetMultiplier * _horizontalDistanceUnits;
                 }
                 else // Even number
                 {
-                    position.x += xOffset;
-                    position.z -= zOffset;
+                    position -= rightVec * offsetMultiplier * _horizontalDistanceUnits;
                     offsetMultiplier++; // After odd - even we increase the offsetmultiplier
                 }
+
+                //float xOffset = offsetMultiplier * _horizontalDistanceUnits;
+                //float zOffset = offsetMultiplier * _verticalDistanceUnits;
+                //if (j % 2 != 0) // Odd number
+                //{
+                //    position.x -= xOffset;
+                //    position.z -= zOffset;
+                //}
+                //else // Even number
+                //{
+                //    position.x += xOffset;
+                //    position.z -= zOffset;
+                //    offsetMultiplier++; // After odd - even we increase the offsetmultiplier
+                //}
+
+     
 
                 _units[index].MoveTowards(position);
                 if (_units[index] == _leaderUnit)
@@ -145,6 +171,7 @@ public class Formation : MonoBehaviour
                 {
                     _units[index].transform.forward = _leaderUnit.transform.forward;
                 }
+
                 index++;
 
             }
