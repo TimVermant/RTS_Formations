@@ -146,20 +146,6 @@ public class Formation : MonoBehaviour
                     offsetMultiplier++; // After odd - even we increase the offsetmultiplier
                 }
 
-                //float xOffset = offsetMultiplier * _horizontalDistanceUnits;
-                //float zOffset = offsetMultiplier * _verticalDistanceUnits;
-                //if (j % 2 != 0) // Odd number
-                //{
-                //    position.x -= xOffset;
-                //    position.z -= zOffset;
-                //}
-                //else // Even number
-                //{
-                //    position.x += xOffset;
-                //    position.z -= zOffset;
-                //    offsetMultiplier++; // After odd - even we increase the offsetmultiplier
-                //}
-
      
 
                 _units[index].MoveTowards(position);
